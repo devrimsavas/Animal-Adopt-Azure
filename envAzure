@@ -1,0 +1,8 @@
+ADMIN_USERNAME = "devrimsavas"  # Azure username
+ADMIN_PASSWORD = "w2Q0zxkHxD65wPBG8SYU"  # Azure password
+DATABASE_NAME = "adoptiondb"  # Azure database name
+DIALECT = "mssql"  # Use mssql for Azure SQL Server
+HOST = "devrimserver.database.windows.net"  # Azure server hostname
+PORT = "1433"  # Default port for Azure SQL
+ENCRYPT = true  # Encryption required for Azure
+TRUST_SERVER_CERTIFICATE = false  # Do not trust server certificate
