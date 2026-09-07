@@ -1,106 +1,96 @@
+# Animal Adoption Platform
 
-# Application Installation and Usage Instructions
-Application Installation and Usage Instructions
-It is  web-based animal adoption application. This document provides basic instructions on how to install and use the application. Follow these steps to get started:
-Installation
-1.	Clone the Repository: Begin by cloning the repository to your local machine.
-2.	Install Dependencies: Navigate to the root directory of the project in your terminal and run npm install to install all required dependencies.
-3.	Environment Configuration: Ensure you have a .env file at the root of your project with all necessary environment variables set. This should include your database configurations. Make sure to include require('dotenv').config(); in your www file to load these configurations.
-4.	Database Setup: To initialize the database and populate it with initial data, ensure your app.js file includes the following line: db.sequelize.sync({ force: true }).then(() => { console.log('Database and tables created!'); });. This line will drop all existing tables and recreate them, so use it with caution.
-Usage
-1.	Starting the Application: Start the application by running npm start. This will launch the server on localhost:3000.
-2.	Populating the Database: Upon first running the application, navigate to the main page at localhost:3000. Here, you should press the "Populate" button to create database tables and populate them from predefined JSON files. The tables will be created automatically.
-3.	Guest Users: Guest users can browse the animals and most of the application's features without the ability to adopt or cancel an adoption.
-4.	Admin Users: Admin users have the ability to cancel adoptions, add new temperaments, and add new species. This elevated access is controlled through user roles within the application
+A web-based animal adoption application built with Node.js, Express, and EJS. The app supports guest browsing and role-based access for administrators, and is configured to run against either a local MySQL database or an Azure-hosted MySQL database.
 
+## 🚀 Features
 
-# Environment Variables
+- Guest users can browse animals and most application features without the ability to adopt or cancel an adoption
+- Admin users can cancel adoptions, add new temperaments, and add new species — access controlled via user roles
+- Database population via a one-click "Populate" button that seeds tables from predefined JSON files
 
-To ensure the application runs smoothly, you must configure your environment variables correctly. Please follow these steps to set up your .env file:
-1.	Create a .env File: In the main folder of your project, create a file named .env. This file will store your environment variables.
-2.	Add Variables to .env File: Copy and paste the following variables into your .env file, making sure to replace the placeholder values with your actual configurations if necessary:
+## 🛠 Tech Stack
 
-ADMIN_USERNAME="dabcaowner" 
-ADMIN_PASSWORD="dabca1234" 
-DATABASE_NAME="adoptiondb" 
-DIALECT="mysql" 
-DIALECTMODEL="mysql2" 
-PORT="3000" 
-HOST="localhost" 
-These variables are essential for the application's operation, including database access and administrative functions.
+- **Backend:** Node.js, Express
+- **Templating:** EJS
+- **ORM:** Sequelize
+- **Database:** MySQL (local or **Azure-hosted**)
+- **Authentication:** Passport (passport-local strategy)
+- **Sessions:** express-session with connect-sqlite3 store
+- **Other:** dotenv, bcrypt, connect-flash, SweetAlert (UI alerts)
 
+## ☁️ Environment Configuration
 
+This project supports two deployment targets, each with its own environment file:
 
+- **`envlocal`** — configuration for running against a local MySQL instance
+- **`envAzure`** — configuration for running against an Azure-hosted MySQL database
 
+Copy the relevant file to `.env` at the project root depending on which environment you want to run against, and ensure `require('dotenv').config();` is included in the app's entry file (`www`) to load these configurations.
 
-# Additional Libraries/Packages
+### Required environment variables
 
-This application utilizes a variety of libraries and packages to facilitate web development, enhance security, manage user sessions, and interact with databases. Below is an overview of the key dependencies included in the **package.json** file:
+```env
+ADMIN_USERNAME="dabcaowner"
+ADMIN_PASSWORD="dabca1234"
+DATABASE_NAME="adoptiondb"
+DIALECT="mysql"
+DIALECTMODEL="mysql2"
+PORT="3000"
+HOST="localhost"   # or your Azure MySQL host when using envAzure
+```
 
--   **Express**: A fast, unopinionated, minimalist web framework for Node.js, essential for handling HTTP requests and structuring the application.
--   **EJS**: A templating language that lets you generate HTML markup with plain JavaScript, providing an efficient way to render dynamic content on web pages.
--   **Sequelize**: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite, and Microsoft SQL Server. It supports transactions, relations, eager and lazy loading, read replication, and more.
--   **Passport**: Simple, unobtrusive authentication for Node.js. This application uses the **passport-local** strategy for authentication with a username and password.
--   **MySQL/MySQL2**: These packages are used for interacting with MySQL databases, allowing the application to store and manage data efficiently.
--   **SQLite3**: Provides a lightweight disk-based database that doesn't require a separate server process, used for development purposes.
--   **Dotenv**: Loads environment variables from a **.env** file into **process.env**, securing application configuration.
--   **Bcrypt**: A library to help you hash passwords, enhancing the security of user information.
--   **Connect-flash**: A middleware for Express that uses a portion of the session for storing messages, useful for passing session flashdata messages.
--   **Express-session**: Simple session middleware for Express, allowing session management capabilities.
--   **Connect-sqlite3**: SQLite3 session store backed by **sqlite3**, used for storing session data.
+## 📦 Installation
 
-For enhancing user experience, **SweetAlert** has been integrated to provide aesthetically pleasing alert messages, confirmations, and prompts.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/devrimsavas/Animal-Adopt-Azure.git
+   cd Animal-Adopt-Azure
+   ```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+3. **Set up environment variables** — copy either `envlocal` or `envAzure` to `.env` and fill in your database credentials
+4. **Database setup** — ensure `app.js` includes:
+   ```js
+   db.sequelize.sync({ force: true }).then(() => {
+     console.log('Database and tables created!');
+   });
+   ```
+   ⚠️ This drops and recreates all existing tables — use with caution.
 
-Additionally, while **bcrypt** and **connect-flash** have been included in the project, they are intended for future development to enhance security and user feedback mechanisms. Currently, authentication is managed using **Passport** with a simple username and password strategy.
+## ▶️ Usage
 
+1. **Start the application**
+   ```bash
+   npm start
+   ```
+   The server launches on `localhost:3000` (or the configured Azure endpoint).
+2. **Populate the database** — on first run, navigate to the main page and press **"Populate"** to create and seed the database tables from predefined JSON files.
+3. **Browse as a guest** — view animals and most features without adopting.
+4. **Manage as an admin** — cancel adoptions, add temperaments and species via role-based access.
 
+## 🗄️ Database Setup (MySQL)
 
+Create the database:
+```sql
+CREATE DATABASE adoptiondb;
+```
 
+Create a user and grant permissions:
+```sql
+GRANT ALL PRIVILEGES ON adoptiondb.* TO 'dabcaowner'@'localhost';
+FLUSH PRIVILEGES;
+```
 
+For the Azure-hosted setup, create the equivalent database and user on your Azure Database for MySQL instance and update `envAzure` accordingly.
 
-# NodeJS Version Used
+## 📋 Requirements
 
-This project is built with NodeJS version 20.10.0. It is crucial to use this version or higher to ensure compatibility with all dependencies and project functionalities.
+- Node.js **v20.10.0** or higher (check with `node -v`)
+- MySQL (local instance or Azure Database for MySQL)
 
-To check if you have Node.js installed and determine your current version, open your terminal or command prompt and run the following command:
+## 📝 Notes
 
-
-
-`node -v`
-
-This command will display the version of Node.js that is currently installed on your system. If you see a version that is 20.10.0 or higher, you're all set to run this application. If you do not have Node.js installed or if your version is lower than 20.10.0, you will need to install or update it.
-
-To install or update Node.js to the latest version, you can download it from the official Node.js website (<https://nodejs.org/>).
-
-
-
-
-
-# DATABASE
-
-
-For this project, you will need to set up a MySQL database to manage the data. Follow the steps below to create the required database and user with the necessary permissions.
-
-Create the Database: First, you need to log in to your MySQL server using MySQL Workbench, the command line, or any other MySQL client you prefer. Once logged in, execute the following SQL command to create a new database named `adoptiondb`:
-
-   
-
-    `CREATE DATABASE adoptiondb;`
-
-
-# DATABASEACCESS
-
-for database access , follow the steps below
-1.  Grant Permissions: After creating the new user, you need to grant it the necessary permissions to access and modify the `adoptiondb` database. Execute the following command to grant all permissions on the `adoptiondb` database to the `dabcaowner` user:
-
-    
-
-    `GRANT ALL PRIVILEGES ON adoptiondb.* TO 'dabcaowner'@'localhost';`
-
-2.  Apply the Changes: To ensure the permissions are applied immediately, execute the following command:
-
-    
-
-    `FLUSH PRIVILEGES;`
-
-
+- `bcrypt` and `connect-flash` are included as dependencies for future development (enhanced security and user feedback). Authentication currently uses **Passport** with a simple username/password strategy.
+- This is a learning project built to practice full-stack development with dual local/cloud deployment configurations.
