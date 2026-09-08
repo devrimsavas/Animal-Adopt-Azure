@@ -1,0 +1,7 @@
+ADMIN_USERNAME=<your-mysql-username>
+ADMIN_PASSWORD=<your-mysql-password>
+DATABASE_NAME="adoptiondb"
+DIALECT="mysql"
+DIALECTMODEL="mysql2"
+PORT="3000"
+HOST="localhost"
