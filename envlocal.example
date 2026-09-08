@@ -1,8 +1,0 @@
-ADMIN_USERNAME=<your-azure-sql-username>
-ADMIN_PASSWORD=<your-azure-sql-password>
-DATABASE_NAME="adoptiondb"
-DIALECT="mssql"
-HOST="<your-server-name>.database.windows.net"
-PORT="1433"
-ENCRYPT=true
-TRUST_SERVER_CERTIFICATE=false
