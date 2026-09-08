@@ -24,8 +24,8 @@ A web-based animal adoption application built with Node.js, Express, and EJS. Th
 
 This project supports two deployment targets, each with its own environment file **template**:
 
-- **`envlocal.sample`** — configuration for running against a local MySQL instance
-- **`envAzure.sample`** — configuration for running against an Azure SQL Server database
+- **`envlocal.example`** — configuration for running against a local MySQL instance
+- **`envAzure.example`** — configuration for running against an Azure SQL Server database
 
 Copy the relevant template to `.env` at the project root, fill in your **own** credentials, and ensure `require('dotenv').config();` is included in the app's entry file to load the configuration.
 
